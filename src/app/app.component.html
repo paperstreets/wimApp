@@ -1,0 +1,23 @@
+<ion-menu side="start" menuId="first" contentId="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title routerLink="/home">
+        <div style="display: flex; justify-content: flex-right; align-items: center; height: 100%;">
+          <img src="assets/icon/favicon.png" alt="WIM Logo" height="32" width="32">
+          <span style="margin-left: 8px;">WIM Analytics</span>
+        </div>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Мапа майданчиків</ion-item>
+      <ion-item>Перелік майданчиків</ion-item>
+      <ion-item>Моніторинг</ion-item>
+      <ion-item>Похибки вимірів</ion-item>
+      <ion-item>Інтенсивність руху</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-router-outlet id="main-content"></ion-router-outlet>

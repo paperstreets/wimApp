@@ -1,0 +1,7 @@
+{
+  "name": "wimApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
