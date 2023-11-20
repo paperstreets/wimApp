@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Перелік майданчиків зважування в русі</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div>
+    <select id="sortOption" [(ngModel)]="sortOption" (ngModelChange)="onSortOptionChange()">
+      <option value="default">Default</option>
+      <option value="problem">Problem</option>
+    </select>
+  </div>
+  <!-- BEGIN: wimList -->
+    <ion-list>
+      <ion-item *ngFor="let item of wimList">
+        <ion-label>
+          <div style="display: flex; flex-direction: row;">
+            <p style="margin-right: 10px;">{{ item.name }}</p>
+            <p style="margin-right: 10px;">Напрям: {{ item.route }}</p>
+            <p>Статус: {{ item.status }}</p>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  <!-- END: wimList -->
+</ion-content>
+  

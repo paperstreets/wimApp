@@ -1,0 +1,38 @@
+#sortOption {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+label {
+    font-weight: bold;
+    display: flex; 
+    margin-left: auto;
+    align-items: center;
+}
+  select {
+    margin-top: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 200px;
+    margin-left: auto; // Add this line to push the select element to the right
+  }
+
+  ion-list {
+    margin-top: 20px;
+  }
+
+  ion-item {
+    padding: 10px;
+  }
+  
+
+  ion-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  p {
+    margin-right: 10px;
+  }
