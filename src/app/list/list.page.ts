@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { WimDataService } from '../wimdata.service';
 @Component({
   selector: 'app-list',
   templateUrl: './list.page.html',
@@ -10,7 +10,8 @@ import { Component, OnInit } from '@angular/core';
     wimList: any[] = [];
     sortOption: string = 'default';
 
-    constructor() { }
+    constructor(private wimDataService: WimDataService) { }
+
 
     ngOnInit() {
       // Fetch the data for the table from the API or any other source
@@ -21,16 +22,16 @@ import { Component, OnInit } from '@angular/core';
       // Make an API call or fetch the data from any other source
       // Replace the following code with your actual implementation
       const apiResponse = [
-        { name: 'WIM 01', wim: 10, route: 'Route 1', status: 'Problem' },
-        { name: 'WIM 02', wim: 20, route: 'Route 2', status: 'Normal' },
-        { name: 'WIM 03', wim: 30, route: 'Route 3', status: 'Problem' },
-        { name: 'WIM 04', wim: 40, route: 'Route 4', status: 'Normal' },
-        { name: 'WIM 05', wim: 50, route: 'Route 5', status: 'Problem' },
-        { name: 'WIM 06', wim: 60, route: 'Route 6', status: 'Normal' },
-        { name: 'WIM 07', wim: 70, route: 'Route 7', status: 'Problem' },
-        { name: 'WIM 08', wim: 80, route: 'Route 8', status: 'Normal' },
-        { name: 'WIM 09', wim: 90, route: 'Route 9', status: 'Problem' },
-        { name: 'WIM 10', wim: 100, route: 'Route 10', status: 'Normal' },
+        { name: 'WIM01', wim: 1, route: 'M-06', status: 'Normal', lat: 50.4523, lng: 30.1936},
+        { name: 'WIM02', wim: 2, route: 'M-06', status: 'Normal', lat: 50.4248, lng: 29.4656},
+        { name: 'WIM03', wim: 3, route: 'M-03', status: 'Normal', lat: 48.3794, lng: 31.1656},
+        { name: 'WIM04', wim: 4, route: 'M-05', status: 'Normal', lat: 48.3794, lng: 31.1656},
+        { name: 'WIM05', wim: 5, route: 'M-07', status: 'Problem', lat: 48.3794, lng: 31.1656},
+        { name: 'WIM06', wim: 6, route: 'M-22', status: 'Normal', lat: 48.3794, lng: 31.1656},
+        { name: 'WIM07', wim: 7, route: 'H-31', status: 'Problem',lat: 48.3794, lng: 31.1656},
+        { name: 'WIM08', wim: 8, route: 'H-01', status: 'Normal', lat: 48.3794, lng: 31.1656},
+        { name: 'WIM09', wim: 9, route: 'H-01', status: 'Problem', lat: 48.3794, lng: 31.1656},
+        { name: 'WIM10', wim: 10, route: 'M-06', status: 'Normal', lat: 48.3794, lng: 31.1656},
       ];
 
       // Sort the data based on the selected sort option
@@ -50,8 +51,8 @@ import { Component, OnInit } from '@angular/core';
 
       // Assign the sorted data to the wimList array
       this.wimList = apiResponse;
+      this.wimDataService.setWimList(this.wimList);
     }
-
     onSortOptionChange() {
       this.fetchWimList();
     }

@@ -10,8 +10,8 @@
 <ion-content [fullscreen]="true">
   <div>
     <select id="sortOption" [(ngModel)]="sortOption" (ngModelChange)="onSortOptionChange()">
-      <option value="default">Default</option>
-      <option value="problem">Problem</option>
+      <option value="default">За замовчуванням</option>
+      <option value="problem">Спочатку проблемні</option>
     </select>
   </div>
   <!-- BEGIN: wimList -->
@@ -20,7 +20,7 @@
         <ion-label>
           <div style="display: flex; flex-direction: row;">
             <p style="margin-right: 10px;">{{ item.name }}</p>
-            <p style="margin-right: 10px;">Напрям: {{ item.route }}</p>
+            <p style="margin-right: 10px;">Дорога: {{ item.route }}</p>
             <p>Статус: {{ item.status }}</p>
           </div>
         </ion-label>
