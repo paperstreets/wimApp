@@ -5,9 +5,13 @@
     </ion-buttons>
     <ion-title>Перелік майданчиків зважування в русі</ion-title>
   </ion-toolbar>
+  
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <div style="display: flex; justify-content: flex-end; align-items: center;">
+    <p routerLink="/map">Карта майданчиків WIM</p>
+  </div>
   <div>
     <select id="sortOption" [(ngModel)]="sortOption" (ngModelChange)="onSortOptionChange()">
       <option value="default">За замовчуванням</option>

@@ -30,28 +30,30 @@ export class MapPage implements OnInit {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map!);
-    console.log(this.list)
+
     // Add markers to the map
-    for (let item of this.list) {
-      console.log(item.lat, item.lng)
-      let markerIcon: Icon;
-      if (item.status === 'default') {
-        markerIcon = icon({
-          iconUrl: 'assets/icon/favicon.png',
-          iconSize: [25, 41],
-          iconAnchor: [12, 41],
-          popupAnchor: [1, -34],
-        });
-      } else {
-        markerIcon = icon({
-          iconUrl: 'assets/icon/favicon.png',
-          iconSize: [25, 41],
-          iconAnchor: [12, 41],
-          popupAnchor: [1, -34],
-        });
+      let defaultMarkerIcon: Icon = icon({
+        iconUrl: 'assets/icon/defaulticon.png',
+        iconSize: [25, 25],
+      });
+
+      for (let item of this.list) {
+        let markerIcon: Icon = defaultMarkerIcon;
+
+        if (item.status === 'Normal') {
+          markerIcon = icon({
+            iconUrl: 'assets/icon/workicon.png',
+            iconSize: [25, 25],
+          });
+        } else if (item.status === 'Problem') {
+          markerIcon = icon({
+            iconUrl: 'assets/icon/warnicon.png',
+            iconSize: [25, 25],
+          });
+        }
+
+        L.marker([item.lat, item.lng], { icon: markerIcon }).addTo(this.map!).bindPopup(item.name).openPopup();
       }
-      L.marker([item.lat, item.lng], { icon: markerIcon }).addTo(this.map!).bindPopup(item.name).openPopup();
-    }
   }
 
   /** Remove map when we have multiple map object */

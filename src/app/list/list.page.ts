@@ -22,10 +22,10 @@ import { WimDataService } from '../wimdata.service';
       // Make an API call or fetch the data from any other source
       // Replace the following code with your actual implementation
       const apiResponse = [
-        { name: 'WIM01', wim: 1, route: 'M-06', status: 'Normal', lat: 50.4523, lng: 30.1936},
+        { name: 'WIM01', wim: 1, route: 'M-06', status: 'Problem', lat: 50.4523, lng: 30.1936},
         { name: 'WIM02', wim: 2, route: 'M-06', status: 'Normal', lat: 50.4248, lng: 29.4656},
         { name: 'WIM03', wim: 3, route: 'M-03', status: 'Normal', lat: 48.3794, lng: 31.1656},
-        { name: 'WIM04', wim: 4, route: 'M-05', status: 'Normal', lat: 48.3794, lng: 31.1656},
+        { name: 'WIM04', wim: 4, route: 'M-05', status: 'Problem', lat: 48.3794, lng: 31.1656},
         { name: 'WIM05', wim: 5, route: 'M-07', status: 'Problem', lat: 48.3794, lng: 31.1656},
         { name: 'WIM06', wim: 6, route: 'M-22', status: 'Normal', lat: 48.3794, lng: 31.1656},
         { name: 'WIM07', wim: 7, route: 'H-31', status: 'Problem',lat: 48.3794, lng: 31.1656},
