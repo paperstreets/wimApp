@@ -19,6 +19,22 @@ const routes: Routes = [
     path: 'list',
     loadChildren: () => import('./list/list.module').then( m => m.ListPageModule)
   },
+  {
+    path: 'traffic',
+    loadChildren: () => import('./traffic/traffic.module').then( m => m.TrafficPageModule)
+  },
+  {
+    path: 'monitor',
+    loadChildren: () => import('./monitor/monitor.module').then( m => m.MonitorPageModule)
+  },
+  {
+    path: 'analysis-ai',
+    loadChildren: () => import('./analysis-ai/analysis-ai.module').then( m => m.AnalysisAIPageModule)
+  },
+  {
+    path: 'measurament-error',
+    loadChildren: () => import('./measurament-error/measurament-error.module').then( m => m.MeasuramentErrorPageModule)
+  },
 ];
 
 @NgModule({
