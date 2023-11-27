@@ -1,59 +1,101 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { WimDataService } from '../wimdata.service';
+import { saveAs } from 'file-saver';
+import html2canvas from 'html2canvas';
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.page.html',
   styleUrls: ['./list.page.scss'],
 })
+export class ListPage implements OnInit {
+  wimList: any[] = [];
+  sortOption: string = 'default';
 
-  export class ListPage implements OnInit {
-    wimList: any[] = [];
-    sortOption: string = 'default';
+  constructor(private httpClient: HttpClient, private wimDataService: WimDataService) { }
 
-    constructor(private wimDataService: WimDataService) { }
+  ngOnInit() {
+    this.fetchWimList();
+  }
 
+  fetchWimList() {
+    this.httpClient.get<any[]>('http://localhost:3000/wimList').subscribe({
+      next: (apiResponse) => {
+        this.sortWimList(apiResponse);
+      },
+      error: (error) => {
+        console.error('Error fetching data:', error);
+      },
+    });
+  }
 
-    ngOnInit() {
-      // Fetch the data for the table from the API or any other source
-      this.fetchWimList();
-    }
+  onSortOptionChange() {
+    this.fetchWimList();
+  }
 
-    fetchWimList() {
-      // Make an API call or fetch the data from any other source
-      // Replace the following code with your actual implementation
-      const apiResponse = [
-        { name: 'WIM01', wim: 1, route: 'M-06', status: 'Problem', lat: 50.4523, lng: 30.1936},
-        { name: 'WIM02', wim: 2, route: 'M-06', status: 'Normal', lat: 50.4248, lng: 29.4656},
-        { name: 'WIM03', wim: 3, route: 'M-03', status: 'Normal', lat: 48.3794, lng: 31.1656},
-        { name: 'WIM04', wim: 4, route: 'M-05', status: 'Problem', lat: 48.3794, lng: 31.1656},
-        { name: 'WIM05', wim: 5, route: 'M-07', status: 'Problem', lat: 48.3794, lng: 31.1656},
-        { name: 'WIM06', wim: 6, route: 'M-22', status: 'Normal', lat: 48.3794, lng: 31.1656},
-        { name: 'WIM07', wim: 7, route: 'H-31', status: 'Problem',lat: 48.3794, lng: 31.1656},
-        { name: 'WIM08', wim: 8, route: 'H-01', status: 'Normal', lat: 48.3794, lng: 31.1656},
-        { name: 'WIM09', wim: 9, route: 'H-01', status: 'Problem', lat: 48.3794, lng: 31.1656},
-        { name: 'WIM10', wim: 10, route: 'M-06', status: 'Normal', lat: 48.3794, lng: 31.1656},
-      ];
+  onStatusChange(newStatus: string, itemId: number) {
+    // Find the item in the local array
+    const item = this.wimList.find((wim) => wim["Номер майданчику WIM"] === itemId);
 
-      // Sort the data based on the selected sort option
-      if (this.sortOption === 'default') {
-        apiResponse.sort((a, b) => a.wim - b.wim);
-      } else if (this.sortOption === 'problem') {
-        apiResponse.sort((a, b) => {
-          if (a.status === 'Problem' && b.status !== 'Problem') {
-            return -1;
-          } else if (a.status !== 'Problem' && b.status === 'Problem') {
-            return 1;
-          } else {
-            return 0;
-          }
+    if (item) {
+      // Update the status in the local array
+      item["Статус роботи"] = newStatus;
+
+      // Update the status on the server
+      this.httpClient.patch(`http://localhost:3000/wimList/${itemId}`, { "Статус роботи": newStatus })
+        .subscribe({
+          next: (response) => {
+            console.log('Status updated successfully:', response);
+          },
+          error: (error) => {
+            console.error('Error updating status:', error);
+          },
         });
-      }
 
-      // Assign the sorted data to the wimList array
-      this.wimList = apiResponse;
+      // Update the status in the data service
       this.wimDataService.setWimList(this.wimList);
-    }
-    onSortOptionChange() {
-      this.fetchWimList();
+    } else {
+      console.error('Item not found:', itemId);
     }
   }
+
+  private sortWimList(list: any[]) {
+    if (this.sortOption === 'default') {
+      list.sort((a, b) => a["Номер майданчику WIM"] - b["Номер майданчику WIM"]);
+    } else if (this.sortOption === 'problem') {
+      list.sort((a, b) => {
+        if (a["Статус роботи"] === 'Problem' && b["Статус роботи"] !== 'Problem') {
+          return -1;
+        } else if (a["Статус роботи"] !== 'Problem' && b["Статус роботи"] === 'Problem') {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    }
+
+    this.wimList = list;
+    this.wimDataService.setWimList(this.wimList);
+  }
+    // Метод для збереження таблиці як зображення PNG
+
+  saveAsImage() {
+    const element = document.getElementById('wimStatus'); // Замініть 'yourTableId' на ідентифікатор вашої таблиці
+    if (element) {
+      html2canvas(element).then((canvas) => {
+        // Преобразуйте canvas в blob
+        canvas.toBlob((blob) => {
+          if (blob) {
+            // Використовуйте file-saver для збереження файлу
+            saveAs(blob, 'table.png');
+          } else {
+            console.error('Error creating blob.');
+          }
+        });
+      });
+    }
+  }
+
+  
+}

@@ -36,3 +36,30 @@ label {
   p {
     margin-right: 10px;
   }
+
+  p.router-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  p.router-link:hover {
+    color: darkblue;
+  }
+
+  button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  button:active {
+    background-color: #003080;
+  }
